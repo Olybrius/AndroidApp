@@ -1,15 +1,50 @@
 package com.emn.jpichard;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Joris on 22/01/2016.
  */
 
-public class Book {
+public class Book implements Parcelable{
 
     private String isbn;
     private String title;
     private String price;
     private String cover;
+
+    protected Book(Parcel in) {
+        isbn = in.readString();
+        title = in.readString();
+        price = in.readString();
+        cover = in.readString();
+    }
+
+    public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(isbn);
+        dest.writeString(title);
+        dest.writeString(price);
+        dest.writeString(cover);
+    }
 
     public String getIsbn() {
         return isbn;

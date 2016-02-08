@@ -1,11 +1,14 @@
 package com.emn.jpichard;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -17,45 +20,59 @@ import java.util.List;
 public class BookRecycledAdapter extends RecyclerView.Adapter<BookRecycledAdapter.ViewHolder> {
 
     private List<Book> mDataset;
+    private Context context;
+    private BooksFragment.OnDetailsBookListener listener;
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView name;
-        public TextView price;
-        public ImageView image;
+        public TextView txtName;
+        public TextView txtPrice;
+        public ImageView txtImage;
 
         public ViewHolder(View v) {
             super(v);
-            image = (ImageView) v.findViewById(R.id.imageImageView);
-            name = (TextView) v.findViewById(R.id.nameTextView);
-            price = (TextView) v.findViewById(R.id.priceTextView);
+            txtImage = (ImageView) v.findViewById(R.id.imageImageView);
+            txtName = (TextView) v.findViewById(R.id.nameTextView);
+            txtPrice = (TextView) v.findViewById(R.id.priceTextView);
         }
     }
 
-    public BookRecycledAdapter(List<Book> myBooks) {
-        mDataset = myBooks;
+    public BookRecycledAdapter(Context context, List<Book> myBooks) {
+
+        this.mDataset = myBooks;
+        this.context = context;
+        this.listener = (BooksFragment.OnDetailsBookListener) context;
     }
 
     @Override
     public BookRecycledAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_view_item_book, parent, false);
-        // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(BookRecycledAdapter.ViewHolder holder, int position) {
-        Glide.with(holder.itemView.getContext()).load(this.mDataset.get(position).getCover()).into(holder.image);
-        holder.name.setText(this.mDataset.get(position).getTitle());
-        holder.price.setText(this.mDataset.get(position).getPrice() + "€");
+    public void onBindViewHolder(BookRecycledAdapter.ViewHolder holder, final int position) {
+        Glide.with(holder.itemView.getContext()).load(this.mDataset.get(position).getCover()).into(holder.txtImage);
+        holder.txtName.setText(this.mDataset.get(position).getTitle());
+        holder.txtPrice.setText(this.mDataset.get(position).getPrice() + "€");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDetailsBook(mDataset.get(position));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public void setBooks(List<Book> books) {
+        this.mDataset = books;
     }
 }
 
