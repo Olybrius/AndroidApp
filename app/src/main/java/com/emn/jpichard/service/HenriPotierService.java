@@ -1,4 +1,6 @@
-package com.emn.jpichard;
+package com.emn.jpichard.service;
+
+import com.emn.jpichard.model.Book;
 
 import java.util.List;
 

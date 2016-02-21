@@ -1,4 +1,4 @@
-package com.emn.jpichard;
+package com.emn.jpichard.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

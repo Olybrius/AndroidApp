@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.emn.jpichard.model.Book;
+
 /**
  * Created by Joris on 22/01/2016.
  */

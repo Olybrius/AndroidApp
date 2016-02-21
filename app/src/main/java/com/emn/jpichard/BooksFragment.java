@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.emn.jpichard.model.Book;
+import com.emn.jpichard.service.HenriPotierService;
+
 import java.util.ArrayList;
 import java.util.List;
 
